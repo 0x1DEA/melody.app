@@ -1,5 +1,7 @@
 import axios from "axios";
 
+import { authorizationHeader } from "../utils.js";
+
 const state = {
   user: null,
   token: null
@@ -15,11 +17,13 @@ const getters = {
 const actions = {
   async login({commit}, user) {
     let {data} = await axios.post("/login", user);
-    commit("setToken", data);
+
+    commit("setToken", data.token);
   },
 
   async getMe({commit}) {
-    let {data} = await axios.get("/me");
+    let {data} = await axios.get("/me", {headers: authorizationHeader(state.token)});
+
     commit("setUser", data);
   },
 
