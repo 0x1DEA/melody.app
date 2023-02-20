@@ -2,7 +2,7 @@
   <header v-if="isAuthorized">
     <Menu as="div" class="relative inline-block text-left">
       <MenuButton class="inline-flex w-full items-center justify-center rounded-full bg-neutral-200 dark:bg-black text-neutral-900 dark:text-neutral-50 hover:bg-neutral-100 dark:hover:bg-neutral-800 focus:outline-none gap-x-2 pr-4">
-        <img class="h-10 w-auto rounded-full" :src="`https://melodykit.app/static/images/user.${user.id}`"/>
+        <img class="h-10 w-auto rounded-full" :src="`https://melodykit.app/static/images/user.${user.id}.png`"/>
         <span>{{ user.name }}</span>
       </MenuButton>
         <MenuItems class="absolute py-1 px-1 mt-2 w-52 divide-y divide-neutral-100 dark:divide-neutral-700 rounded-md bg-neutral-200 dark:bg-neutral-800 text-neutral-900 dark:text-neutral-50 focus:outline-none">
