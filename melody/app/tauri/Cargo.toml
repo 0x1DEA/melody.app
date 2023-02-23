@@ -1,0 +1,27 @@
+[package]
+name = "app"
+version = "0.1.0"
+description = "All your music, in one place."
+authors = ["MelodyKit"]
+license = "MIT"
+repository = "https://github.com/MelodyKit/melody.app"
+edition = "2021"
+
+[build-dependencies.tauri-build]
+version = "1.0.4"
+features = []
+
+[dependencies]
+serde_json = "1.0"
+
+[dependencies.serde]
+version = "1.0"
+features = ["derive"]
+
+[dependencies.tauri]
+version = "1.0.5"
+features = ["api-all"]
+
+[features]
+default = ["custom-protocol"]
+custom-protocol = ["tauri/custom-protocol"]

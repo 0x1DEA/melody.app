@@ -1,0 +1,68 @@
+{
+  "build": {
+    "beforeBuildCommand": "",
+    "beforeDevCommand": "",
+    "devPath": "http://localhost:4269",
+    "distDir": "../dist"
+  },
+  "package": {
+    "productName": "MelodyKit",
+    "version": "0.1.0"
+  },
+  "tauri": {
+    "allowlist": {
+      "all": true
+    },
+    "bundle": {
+      "active": true,
+      "category": "DeveloperTool",
+      "copyright": "",
+      "deb": {
+        "depends": []
+      },
+      "externalBin": [],
+      "icon": [
+        "icons/icon.svg",
+        "icons/icon.png",
+        "icons/icon.ico"
+      ],
+      "identifier": "com.melody.kit",
+      "longDescription": "",
+      "macOS": {
+        "entitlements": null,
+        "exceptionDomain": "",
+        "frameworks": [],
+        "providerShortName": null,
+        "signingIdentity": null
+      },
+      "resources": [],
+      "shortDescription": "",
+      "targets": "all",
+      "windows": {
+        "certificateThumbprint": null,
+        "digestAlgorithm": "sha256",
+        "timestampUrl": ""
+      }
+    },
+    "security": {
+      "csp": null
+    },
+    "updater": {
+      "active": false
+    },
+    "windows": [
+      {
+        "fullscreen": false,
+        "resizable": true,
+        "width": 1024,
+        "height": 576,
+        "minWidth": 1024,
+        "minHeight": 576,
+        "decorations": false,
+        "transparent": true,
+        "title": "MelodyKit",
+        "url": "https://melodykit.app/open"
+      }
+    ]
+  }
+}

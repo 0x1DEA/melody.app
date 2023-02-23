@@ -4,8 +4,16 @@ node_modules
 
 # distribution
 
-/dist
+dist/
 
 # lock file
 
 package-lock.json
+
+# builds
+
+target/
+
+# lock file
+
+Cargo.lock
