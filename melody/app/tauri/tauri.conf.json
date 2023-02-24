@@ -1,7 +1,9 @@
 {
   "build": {
     "beforeBuildCommand": "",
-    "beforeDevCommand": ""
+    "beforeDevCommand": "",
+    "devPath": "http://127.0.0.1:4269/",
+    "distDir": "../dist"
   },
   "package": {
     "productName": "MelodyKit",
@@ -57,9 +59,7 @@
         "minWidth": 1024,
         "minHeight": 576,
         "decorations": false,
-        "transparent": true,
-        "title": "MelodyKit",
-        "url": "https://melodykit.app/open"
+        "title": "MelodyKit"
       }
     ]
   }

@@ -1,7 +1,19 @@
-<template v-if="isAutorized">
-  <header class="flex justify-between">
-    <nav class="flex min-h-screen">
-      <div class="hidden w-64 bg-neutral-50 dark:bg-black lg:block px-4 py-2">
+<template>
+  <div data-tauri-drag-region v-if="isApp" class="flex justify-end select-none">
+    <div @click="control(MINIMIZE)" class="px-4 py-1 rounded-bl-xl bg-white dark:bg-black hover:bg-neutral-200 dark:hover:bg-neutral-800">
+      <i class="fa-solid fa-minus"></i>
+    </div>
+    <div @click="control(RESTORE)" class="px-4 py-1 bg-white dark:bg-black hover:bg-neutral-200 dark:hover:bg-neutral-800">
+      <i class="fa-solid fa-window-restore"></i>
+    </div>
+    <div @click="control(CLOSE)" class="px-4 py-1 bg-white dark:bg-black hover:bg-red-600">
+      <i class="fa-solid fa-xmark"></i>
+    </div>
+  </div>
+
+  <header v-if="isAuthorized" class="flex justify-between z-50">
+    <nav class="absolute flex w-64 min-h-screen top-0">
+      <div class="hidden bg-neutral-50 dark:bg-black lg:block px-4 py-2">
         <div class="divide-y divide-neutral-200 dark:divide-neutral-700">
           <div>
             <div class="pb-4">
@@ -40,43 +52,30 @@
         </div>
       </div>
     </nav>
-    <div v-if="isApp">
-      <div class="flex items-center sticky">
-        <div @click="control(MINIMIZE)" class="px-4 py-1 bg-white dark:bg-black hover:bg-neutral-200 dark:hover:bg-neutral-800">
-          <i class="fa-solid fa-minus"></i>
+    <Menu as="div" :class="['absolute inline-block text-left top-4', isApp ? 'right-40' : 'right-4']">
+      <MenuButton class="inline-flex w-full items-center justify-center rounded-full bg-neutral-200 dark:bg-black text-neutral-900 dark:text-neutral-50 hover:bg-neutral-100 dark:hover:bg-neutral-800 focus:outline-none gap-x-2 pr-4">
+        <img class="h-10 w-auto rounded-full" :src="`https://melodykit.app/static/images/user.${user.id}.png`"/>
+        <span>{{ user.name }}</span>
+      </MenuButton>
+      <MenuItems class="absolute py-1 px-1 mt-2 w-52 divide-y divide-neutral-100 dark:divide-neutral-700 rounded-md bg-neutral-200 dark:bg-neutral-800 text-neutral-900 dark:text-neutral-50 focus:outline-none right-0">
+        <div>
+          <MenuItem v-slot="{ active }">
+            <a href="/me" :class="[active ? 'bg-neutral-100 dark:bg-neutral-700' : '', 'block rounded-sm px-4 py-2']">Profile</a>
+          </MenuItem>
+          <MenuItem v-slot="{ active }">
+            <a href="/settings" :class="[active ? 'bg-neutral-100 dark:bg-neutral-700' : '', 'block rounded-sm px-4 py-2']">Settings</a>
+          </MenuItem>
         </div>
-        <div @click="control(RESTORE)" class="px-4 py-1 bg-white dark:bg-black hover:bg-neutral-200 dark:hover:bg-neutral-800">
-          <i class="fa-solid fa-window-restore"></i>
+        <div>
+          <MenuItem v-slot="{ active }">
+            <a href="https://melodykit.app/logout" :class="[active ? 'bg-neutral-100 dark:bg-neutral-700' : '', 'block rounded-sm px-4 py-2']">Log out</a>
+          </MenuItem>
         </div>
-        <div @click="control(CLOSE)" class="px-4 py-1 bg-white dark:bg-black hover:bg-red-600">
-          <i class="fa-solid fa-xmark"></i>
-        </div>
-      </div>
-    </div>
+      </MenuItems>
+    </Menu>
   </header>
-  <!--
-  <Menu as="div" class="absolute inline-block text-left mt-4 mr-4">
-    <MenuButton class="inline-flex w-full items-center justify-center rounded-full bg-neutral-200 dark:bg-black text-neutral-900 dark:text-neutral-50 hover:bg-neutral-100 dark:hover:bg-neutral-800 focus:outline-none gap-x-2 pr-4">
-      <img class="h-10 w-auto rounded-full" :src="`https://melodykit.app/static/images/user.png`"/>
-      <span>name</span>
-    </MenuButton>
-    <MenuItems class="absolute py-1 px-1 mt-2 w-52 divide-y divide-neutral-100 dark:divide-neutral-700 rounded-md bg-neutral-200 dark:bg-neutral-800 text-neutral-900 dark:text-neutral-50 focus:outline-none right-0">
-      <div>
-        <MenuItem v-slot="{ active }">
-          <a href="/me" :class="[active ? 'bg-neutral-100 dark:bg-neutral-700' : '', 'block rounded-sm px-4 py-2']">Profile</a>
-        </MenuItem>
-        <MenuItem v-slot="{ active }">
-          <a href="/settings" :class="[active ? 'bg-neutral-100 dark:bg-neutral-700' : '', 'block rounded-sm px-4 py-2']">Settings</a>
-        </MenuItem>
-      </div>
-      <div>
-        <MenuItem v-slot="{ active }">
-          <a href="https://melodykit.app/logout" :class="[active ? 'bg-neutral-100 dark:bg-neutral-700' : '', 'block rounded-sm px-4 py-2']">Log out</a>
-        </MenuItem>
-      </div>
-    </MenuItems>
-  </Menu>
-  -->
+  <section v-else>
+  </section>
 </template>
 
 <script>
@@ -116,7 +115,7 @@ export default defineComponent({
 </script>
 
 <script setup>
-// import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
+import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
 
 import {appWindow} from "@tauri-apps/api/window";
 
