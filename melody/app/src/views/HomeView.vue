@@ -11,7 +11,7 @@
     </div>
   </div>
 
-  <header v-if="isAuthorized" class="flex justify-between z-50">
+  <header v-if="isAuthorized" class="flex justify-between z-40">
     <nav class="absolute flex w-64 min-h-screen top-0">
       <div class="hidden bg-neutral-50 dark:bg-black lg:block px-4 py-2">
         <div class="divide-y divide-neutral-200 dark:divide-neutral-700">
@@ -44,7 +44,7 @@
               </a>
             </div>
           </div>
-          <div v-if="userPlaylists" class="pt-4">
+          <div v-if="userPlaylists && userPlaylists.length" class="pt-4">
             <a v-for="userPlaylist in userPlaylists" v-bind:key="userPlaylist" class="px-2 pb-4 hover:text-melody-blue" :href="`/playlists/${userPlaylist.id}`">
               {{ userPlaylist.name }}
             </a>
@@ -74,8 +74,23 @@
       </MenuItems>
     </Menu>
   </header>
-  <section v-else>
-  </section>
+  <footer v-if="isAuthorized" class="absolute flex items-center justify-center bottom-0 w-screen h-32 bg-neutral-200 dark:bg-neutral-800 gap-x-8 z-50">
+    <button>
+      <i class="fa-solid fa-shuffle h-6 w-auto dark:text-neutral-400 dark:hover:text-neutral-50"></i>
+    </button>
+    <button>
+      <i class="fa-solid fa-backward h-6 w-auto dark:text-neutral-300 dark:hover:text-neutral-50"></i>
+    </button>
+    <button>
+      <i class="fa-solid fa-circle-play h-10 w-auto dark:text-neutral-50"></i>
+    </button>
+    <button>
+      <i class="fa-solid fa-forward h-6 w-auto dark:text-neutral-300 dark:hover:text-neutral-50"></i>
+    </button>
+    <button>
+      <i class="fa-solid fa-repeat h-6 w-auto dark:text-neutral-400 dark:hover:text-neutral-50"></i>
+    </button>
+  </footer>
 </template>
 
 <script>
