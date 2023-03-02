@@ -36,6 +36,12 @@ const actions = {
   },
 
   async logout({commit}) {
+    let token = state.token;
+
+    if (token) {
+      await axios.post("/logout", null, {headers: authorizationHeader(state.token)});
+    }
+
     commit("setUser", null);
     commit("setToken", null);
   }

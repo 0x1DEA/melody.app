@@ -1,6 +1,6 @@
 <template>
   <WindowControls v-if="isApp"/>
-  <MenuCollection v-if="isAuthorized" isHome/>
+  <MenuCollection v-if="isAuthorized" isLibrary/>
   <LoginForm v-else/>
 </template>
 
@@ -8,7 +8,7 @@
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: "HomeView",
+  name: "LibraryView",
   computed: {
     isAuthorized() {
       return this.$store.getters.isAuthorized;
