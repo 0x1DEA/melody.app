@@ -9,7 +9,6 @@ const state = {
 };
 
 const getters = {
-  isPresent: state => !!state.user,
   isAuthorized: state => !!state.token,
   stateUser: state => state.user,
   stateUserPlaylists: state => state.userPlaylists,
