@@ -16,7 +16,7 @@ export default defineComponent({
   created() {
     let token = this.$cookies.get(TOKEN);
 
-    if (!this.getters.isAuthorized && token) {
+    if (!this.$store.getters.isAuthorized && token) {
       this.$store.commit(SET_TOKEN, token);
     }
 
