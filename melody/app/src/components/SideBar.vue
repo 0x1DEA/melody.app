@@ -34,7 +34,7 @@
               <span class="text-md">Create Playlist</span>
             </a>
             <a class="flex items-center px-2 pb-4 gap-x-4" href="/liked_tracks">
-              <i class="fa-solid fa-square-heart w-5 h-auto"></i>
+              <i class="fa-solid fa-heart w-5 h-auto"></i>
               <span class="text-md">Liked Tracks</span>
             </a>
           </div>
