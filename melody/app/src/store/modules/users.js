@@ -42,6 +42,7 @@ const actions = {
     }
 
     commit("setUser", null);
+    commit("setUserPlaylists", null);
     commit("setToken", null);
   }
 };
