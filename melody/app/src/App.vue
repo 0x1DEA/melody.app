@@ -20,10 +20,20 @@ export default defineComponent({
       this.$store.commit(SET_TOKEN, token);
     }
 
-    if (this.$store.getters.isAuthorized) {
-      this.$store.dispatch(GET_ME);
-      this.$store.dispatch(GET_ME_PLAYLISTS);
-    }
+    this.fetchData();
   },
+  methods: {
+    fetchData() {
+      if (this.$store.getters.isAuthorized) {
+        if (!this.$store.getters.stateUser) {
+          this.$store.dispatch(GET_ME);
+        }
+
+        if (!this.$store.getters.stateUserPlaylists) {
+          this.$store.dispatch(GET_ME_PLAYLISTS);
+        }
+      }
+    }
+  }
 });
 </script>

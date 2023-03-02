@@ -46,9 +46,10 @@ export default defineComponent({
   },
   methods: {
     ...mapActions(["login"]),
+
     async submit() {
       await this.login(this.userData);
-      this.$root.$forceUpdate();
+      this.$root.fetchData();
     },
   },
 });
