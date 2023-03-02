@@ -29,11 +29,13 @@
             </a>
           </div>
           <div class="pb-4">
-            <a class="flex items-center px-2 pb-4 gap-x-4" href="/create_playlist">
-              <span class="text-md text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-50">Create Playlist</span>
+            <a class="flex items-center px-2 pb-4 gap-x-4 text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-50" href="/create_playlist">
+              <i class="fa-solid fa-square-plus w-5 h-auto"></i>
+              <span class="text-md">Create Playlist</span>
             </a>
             <a class="flex items-center px-2 pb-4 gap-x-4" href="/liked_tracks">
-              <span class="text-md text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-50">Liked Tracks</span>
+              <i class="fa-solid fa-square-heart w-5 h-auto"></i>
+              <span class="text-md">Liked Tracks</span>
             </a>
           </div>
         </div>
