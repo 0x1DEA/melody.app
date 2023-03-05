@@ -22,7 +22,7 @@ const routes = [
     component: LibraryView,
   },
   {
-    path: "/playlist/:playlistID",
+    path: "/playlists/:playlistID",
     name: "playlist",
     component: PlaylistView,
   },
