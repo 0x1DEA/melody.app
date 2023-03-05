@@ -25,13 +25,8 @@ export default defineComponent({
   methods: {
     fetchData() {
       if (this.$store.getters.isAuthorized) {
-        if (!this.$store.getters.stateUser) {
-          this.$store.dispatch(GET_ME);
-        }
-
-        if (!this.$store.getters.stateUserPlaylists) {
-          this.$store.dispatch(GET_ME_PLAYLISTS);
-        }
+        this.$store.dispatch(GET_ME);
+        this.$store.dispatch(GET_ME_PLAYLISTS);
       }
     }
   }

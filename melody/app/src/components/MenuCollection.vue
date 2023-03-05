@@ -1,8 +1,9 @@
 <template>
   <header class="flex justify-between z-40">
-    <SideBar :isHome="isHome" :isSearch="isSearch" :isLibrary="isLibrary"></SideBar>
-    <SmallMenu></SmallMenu>
+    <SideBar :isHome="isHome" :isSearch="isSearch" :isLibrary="isLibrary"/>
+    <SmallMenu/>
   </header>
+  <PlayerControls/>
 </template>
 
 <script>
@@ -19,6 +20,7 @@ export default defineComponent({
 </script>
 
 <script setup>
+import PlayerControls from "./PlayerControls.vue";
 import SideBar from "./SideBar.vue";
 import SmallMenu from "./SmallMenu.vue";
 </script>

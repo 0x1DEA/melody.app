@@ -15,7 +15,7 @@
       </div>
       <div>
         <MenuItem v-slot="{ active }">
-          <a href="/logout" :class="[active ? 'bg-neutral-100 dark:bg-neutral-700' : '', 'block rounded-sm px-4 py-2']">Log out</a>
+          <button type="button" @click="logout()" :class="[active ? 'bg-neutral-100 dark:bg-neutral-700' : '', 'block rounded-sm px-4 py-2 w-full text-left']">Log out</button>
         </MenuItem>
       </div>
     </MenuItems>
@@ -24,6 +24,8 @@
 
 <script>
 import { defineComponent } from "vue";
+
+const LOGOUT = "logout";
 
 export default defineComponent({
   name: "SmallMenu",
@@ -34,6 +36,11 @@ export default defineComponent({
     isApp() {
       return Boolean(window.__TAURI_METADATA__);
     },
+  },
+  methods: {
+    logout() {
+      this.$store.dispatch(LOGOUT);
+    }
   },
 });
 </script>
