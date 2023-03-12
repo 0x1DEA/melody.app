@@ -5,14 +5,14 @@ import { authorizationHeader } from "../utils.js";
 const state = {
   user: null,
   user_playlists: null,
-  token: null
+  token: null,
 };
 
 const getters = {
   isAuthorized: state => !!state.token,
   stateUser: state => state.user,
   stateUserPlaylists: state => state.userPlaylists,
-  stateToken: state => state.token
+  stateToken: state => state.token,
 };
 
 const actions = {
@@ -44,7 +44,7 @@ const actions = {
     commit("setUser", null);
     commit("setUserPlaylists", null);
     commit("setToken", null);
-  }
+  },
 };
 
 const mutations = {
@@ -56,12 +56,12 @@ const mutations = {
   },
   setToken(state, token) {
     state.token = token;
-  }
+  },
 };
 
 export default {
   state,
   getters,
   actions,
-  mutations
+  mutations,
 };

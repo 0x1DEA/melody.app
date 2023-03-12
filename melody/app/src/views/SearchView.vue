@@ -16,7 +16,7 @@ export default defineComponent({
     isApp() {
       return Boolean(window.__TAURI_METADATA__);
     },
-  }
+  },
 });
 </script>
 

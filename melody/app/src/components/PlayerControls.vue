@@ -1,31 +1,47 @@
 <template>
   <footer class="absolute flex bottom-0 w-screen h-28 z-50">
-    <div class="hidden lg:flex items-center justify-center w-full h-full bg-neutral-200 dark:bg-neutral-800 gap-x-8">
-      <div class="relative">
-        <button type="button" @click="toggleShuffle()" :class="[isShuffle ? 'text-melody-blue' : 'text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-50']">
-          <i class="fa-solid fa-shuffle h-6 w-auto"></i>
+    <div class="hidden lg:flex justify-between items-center w-full h-full bg-neutral-200 dark:bg-neutral-800">
+      <div class="flex items-center justify-center gap-x-8">
+        <div class="relative">
+          <button type="button" @click="toggleShuffle()" :class="[isShuffle ? 'text-melody-blue' : 'text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-50']">
+            <i class="fa-solid fa-shuffle h-6 w-auto"></i>
+          </button>
+          <span v-if="isShuffle" class="text-melody-blue">
+            <i class="fa-solid fa-circle h-2 w-auto px-2 absolute block"></i>
+          </span>
+        </div>
+        <button type="button">
+          <i class="fa-solid fa-backward h-6 w-auto text-neutral-600 hover:text-neutral-900 dark:text-neutral-300 dark:hover:text-neutral-50"></i>
         </button>
-        <span v-if="isShuffle" class="text-melody-blue">
-          <i class="fa-solid fa-circle h-2 w-auto px-2 absolute block"></i>
-        </span>
+        <button type="button" @click="togglePlaying()" class="text-neutral-900 dark:text-neutral-50">
+          <span v-if="isPlaying"><i class="fa-solid fa-circle-pause h-10 w-auto"></i></span>
+          <span v-else><i class="fa-solid fa-circle-play h-10 w-auto"></i></span>
+        </button>
+        <button type="button">
+          <i class="fa-solid fa-forward h-6 w-auto text-neutral-600 hover:text-neutral-900 dark:text-neutral-300 dark:hover:text-neutral-50"></i>
+        </button>
+        <div class="relative">
+          <button type="button" @click="toggleRepeat()" :class="[isRepeatAny ? 'text-melody-blue' : 'text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-50']">
+            <i class="fa-solid fa-repeat h-6 w-auto"></i>
+          </button>
+          <span v-if="isRepeatAny" class="text-melody-blue">
+            <i class="fa-solid fa-circle h-2 w-auto px-2 absolute block"></i>
+          </span>
+        </div>
       </div>
-      <button type="button">
-        <i class="fa-solid fa-backward h-6 w-auto text-neutral-600 hover:text-neutral-900 dark:text-neutral-300 dark:hover:text-neutral-50"></i>
-      </button>
-      <button type="button" @click="togglePlaying()" class="text-neutral-900 dark:text-neutral-50">
-        <span v-if="isPlaying"><i class="fa-solid fa-circle-pause h-10 w-auto"></i></span>
-        <span v-else><i class="fa-solid fa-circle-play h-10 w-auto"></i></span>
-      </button>
-      <button type="button">
-        <i class="fa-solid fa-forward h-6 w-auto text-neutral-600 hover:text-neutral-900 dark:text-neutral-300 dark:hover:text-neutral-50"></i>
-      </button>
-      <div class="relative">
-        <button type="button" @click="toggleRepeat()" :class="[isRepeatAny ? 'text-melody-blue' : 'text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-50']">
-          <i class="fa-solid fa-repeat h-6 w-auto"></i>
+      <div class="flex items-center justify-center gap-x-8">
+        <button type="button" @click="viewLyrics()">
+          <i class="fa-solid fa-align-justify h-6 w-auto text-neutral-600 hover:text-neutral-900 dark:text-neutral-300 dark:hover:text-neutral-50"></i>
         </button>
-        <span v-if="isRepeatAny" class="text-melody-blue">
-          <i class="fa-solid fa-circle h-2 w-auto px-2 absolute block"></i>
-        </span>
+        <button type="button" @click="viewQueue()">
+          <i class="fa-solid fa-list-ul h-6 w-auto text-neutral-600 hover:text-neutral-900 dark:text-neutral-300 dark:hover:text-neutral-50"></i>
+        </button>
+        <button type="button" @click="viewDevice()">
+          <i class="fa-solid fa-display h-6 w-auto text-neutral-600 hover:text-neutral-900 dark:text-neutral-300 dark:hover:text-neutral-50"></i>
+        </button>
+        <button type="button" @click="viewFullscreen()">
+          <i class="fa-solid fa-up-right-and-down-left-from-center h-6 w-auto text-neutral-600 hover:text-neutral-900 dark:text-neutral-300 dark:hover:text-neutral-50"></i>
+        </button>
       </div>
     </div>
   </footer>
@@ -39,6 +55,11 @@ const REPEAT = 1;
 const REPEAT_ONE = 2;
 const REPEAT_CYCLE = 3;
 
+const VOLUME_OFF = 0;
+const VOLUME_LOW = 1;
+const VOLUME_NORMAL = 2;
+const VOLUME_HIGH = 3;
+
 export default defineComponent({
   name: "PlayerControls",
   data() {
@@ -46,6 +67,8 @@ export default defineComponent({
       shuffle: false,
       playing: false,
       repeat: NO_REPEAT,
+      volume: 0.5,
+      volume_store: 0.0,
     }
   },
   computed: {
@@ -63,7 +86,19 @@ export default defineComponent({
     },
     isRepeatAny() {
       return this.isRepeat || this.isRepeatOne;
-    }
+    },
+    isVolumeHigh() {
+      return this.getVolume() == VOLUME_HIGH;
+    },
+    isVolumeNormal() {
+      return this.getVolume() == VOLUME_NORMAL;
+    },
+    isVolumeLow() {
+      return this.getVolume() == VOLUME_LOW;
+    },
+    isVolumeOff() {
+      return this.getVolume() == VOLUME_OFF;
+    },
   },
   methods: {
     toggleShuffle() {
@@ -74,7 +109,43 @@ export default defineComponent({
     },
     toggleRepeat() {
       this.repeat = (this.repeat + 1) % REPEAT_CYCLE;
-    }
-  }
+    },
+    toggleVolume() {
+      if (!this.volume) {
+        this.volume = this.volume_store;
+      } else {
+        this.volume_store = this.volume;
+        this.volume = 0.0;
+      }
+    },
+    getVolume() {
+      const volume = this.volume;
+
+      if (volume > 0.75) {
+        return VOLUME_HIGH;
+      } else if (volume > 0.25) {
+        return VOLUME_NORMAL;
+      } else if (volume > 0.0) {
+        return VOLUME_LOW;
+      } else {
+        return VOLUME_OFF;
+      }
+    },
+    viewQueue() {
+    },
+    viewLyrics() {
+    },
+    viewDevice() {
+    },
+  },
 });
+</script>
+
+<script setup>
+import { appWindow } from "@tauri-apps/api/window";
+
+async function viewFullscreen() {
+  await appWindow.setFullscreen(true);
+  // ...
+}
 </script>

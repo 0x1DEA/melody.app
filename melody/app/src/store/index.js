@@ -5,7 +5,7 @@ import users from "./modules/users.js";
 
 export default createStore({
   modules: {
-    users
+    users,
   },
-  plugins: [createPersistedState({key: "MelodyKit"})]
+  plugins: [createPersistedState({key: "MelodyKit"})],
 });
