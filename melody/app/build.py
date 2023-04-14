@@ -1,5 +1,5 @@
-from subprocess import call
 from pathlib import Path
+from subprocess import call
 from sys import exit
 from typing import Sequence
 
@@ -10,8 +10,8 @@ EXECUTE = "npx"
 TAILWIND = "tailwindcss"
 INPUT = "-i"
 OUTPUT = "-o"
-MINIFY = "--minify"
-WATCH = "--watch"
+MINIFY = "-m"
+WATCH = "-w"
 
 ROOT = Path(__file__).parent
 
