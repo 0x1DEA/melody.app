@@ -22,7 +22,12 @@
         </button>
         <div class="relative">
           <button type="button" @click="toggleRepeat()" :class="[isRepeatAny ? 'text-melody-blue' : 'text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-50']">
-            <i class="fa-solid fa-repeat h-6 w-auto"></i>
+            <span v-if="isRepeatOne">
+              <i class="fa-solid fa-repeat-1 h-6 w-auto"></i>
+            </span>
+            <span v-else>
+              <i class="fa-solid fa-repeat h-6 w-auto"></i>
+            </span>
           </button>
           <span v-if="isRepeatAny" class="text-melody-blue">
             <i class="fa-solid fa-circle h-2 w-auto px-2 absolute block"></i>

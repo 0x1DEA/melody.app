@@ -2,7 +2,7 @@
   <WindowControls v-if="isApp"/>
   <MenuCollection v-if="isAuthorized"/>
   <LoginForm v-else/>
-  <section class="absolute left-60 top-0 z-0" v-if="isAuthorized">
+  <section class="absolute left-64 top-4 z-0" v-if="isAuthorized">
     <img class="h-48 w-auto" :src="`https://melodykit.app/api/v1/playlists/${playlistID}/image`"/>
   </section>
 </template>
