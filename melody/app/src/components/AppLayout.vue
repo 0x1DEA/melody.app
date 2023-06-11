@@ -60,8 +60,8 @@ export default defineComponent({
 </script>
 
 <script setup>
-import LoginForm from "../components/LoginForm.vue";
-import { isAuthorized, isApp } from "@/util.js";
+import { isAuthorized, isApp } from "@/utils.js";
+import LoginForm from "@/components/LoginForm.vue";
 import PlayerControls from "@/components/PlayerControls.vue";
 import SmallMenu from "@/components/SmallMenu.vue";
 import SideBar from "@/components/SideBar.vue";

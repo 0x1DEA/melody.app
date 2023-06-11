@@ -1,4 +1,4 @@
-import {useStore} from "vuex";
+import { useStore } from "vuex";
 
 export const isApp = () => {
   return Boolean(window.__TAURI_METADATA__);
