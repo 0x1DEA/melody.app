@@ -31,7 +31,7 @@ const actions = {
   async getMePlaylists({commit}) {
     let {data} = await axios.get("/me/playlists", {headers: authorizationHeader(state.token)});
 
-    commit("setUserPlaylists", data);
+    commit("setUserPlaylists", data.items);
   },
 
   async logout({commit}) {
