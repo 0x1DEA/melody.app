@@ -15,12 +15,10 @@ WATCH = "-w"
 
 ROOT = Path(__file__).parent
 
-PUBLIC_NAME = "public"
 STATIC_NAME = "static"
 CSS_NAME = "css"
 
-PUBLIC = ROOT / PUBLIC_NAME
-STATIC = PUBLIC / STATIC_NAME
+STATIC = ROOT / STATIC_NAME
 CSS = STATIC / CSS_NAME
 
 INPUT_NAME = "input.css"

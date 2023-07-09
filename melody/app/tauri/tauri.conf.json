@@ -56,8 +56,6 @@
         "resizable": true,
         "width": 1024,
         "height": 576,
-        "minWidth": 1024,
-        "minHeight": 576,
         "decorations": false,
         "title": "MelodyKit"
       }

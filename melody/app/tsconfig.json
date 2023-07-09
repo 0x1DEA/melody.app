@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+        "baseUrl": ".",
+        "module": "ESNext",
+        "moduleResolution": "bundler",
+        "resolveJsonModule": true,
+        "jsx": "preserve",
+        "jsxImportSource": "vue",
+        "strict": true,
+        "verbatimModuleSyntax": true,
+        "target": "ESNext",
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+        "skipLibCheck": true,
+        "paths": {
+            "@/*": [
+                "src/*"
+            ]
+        },
+        "isolatedModules": true
+    }
+}

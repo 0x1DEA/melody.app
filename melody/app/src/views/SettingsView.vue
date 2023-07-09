@@ -1,5 +1,5 @@
 <template>
-  <AppLayout title="Library">
+  <AppLayout title="Settings">
   </AppLayout>
 </template>
 
@@ -9,7 +9,7 @@ import { defineComponent } from "vue";
 import AppLayout from "@/components/AppLayout.vue";
 
 export default defineComponent({
-  name: "LibraryView",
+  name: "SettingsView",
   components: {AppLayout},
 });
 </script>

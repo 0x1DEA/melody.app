@@ -1,18 +1,18 @@
 <template>
   <div data-tauri-drag-region class="flex justify-end select-none">
-    <div @click="control(MINIMIZE)" class="px-4 py-1 bg-white dark:bg-black hover:bg-neutral-200 dark:hover:bg-neutral-800">
+    <div @click="minimize()" class="px-4 py-1 bg-white dark:bg-black hover:bg-neutral-200 dark:hover:bg-neutral-800">
       <i class="fa-solid fa-minus"></i>
     </div>
-    <div @click="control(RESTORE)" class="px-4 py-1 bg-white dark:bg-black hover:bg-neutral-200 dark:hover:bg-neutral-800">
+    <div @click="restore()" class="px-4 py-1 bg-white dark:bg-black hover:bg-neutral-200 dark:hover:bg-neutral-800">
       <i class="fa-solid fa-window-restore"></i>
     </div>
-    <div @click="control(CLOSE)" class="px-4 py-1 bg-white dark:bg-black hover:bg-red-600">
+    <div @click="close()" class="px-4 py-1 bg-white dark:bg-black hover:bg-red-600">
       <i class="fa-solid fa-xmark"></i>
     </div>
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { defineComponent } from "vue";
 
 export default defineComponent({
@@ -20,26 +20,18 @@ export default defineComponent({
 });
 </script>
 
-<script setup>
+<script setup lang="ts">
 import { appWindow } from "@tauri-apps/api/window";
 
-const MINIMIZE = 0;
-const RESTORE = 1;
-const CLOSE = 2;
+async function minimize() {
+  await appWindow.minimize();
+}
 
-async function control(mode) {
-  switch (mode) {
-    case MINIMIZE:
-      await appWindow.minimize();
-      break;
+async function restore() {
+  await appWindow.toggleMaximize();
+}
 
-    case RESTORE:
-      await appWindow.toggleMaximize();
-      break;
-
-    case CLOSE:
-      await appWindow.close();
-      break;
-  }
+async function close() {
+  await appWindow.close();
 }
 </script>

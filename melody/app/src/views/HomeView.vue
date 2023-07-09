@@ -1,11 +1,11 @@
 <template>
   <AppLayout title="Home">
-    <p>The home page!</p>
   </AppLayout>
 </template>
 
-<script>
+<script lang="ts">
 import { defineComponent } from "vue";
+
 import AppLayout from "@/components/AppLayout.vue";
 
 export default defineComponent({
@@ -13,4 +13,3 @@ export default defineComponent({
   components: {AppLayout},
 });
 </script>
-

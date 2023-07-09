@@ -36,7 +36,7 @@
   <LoginForm v-else/>
 </template>
 
-<script>
+<script lang="ts">
 import { defineComponent } from "vue";
 
 export default defineComponent({
@@ -59,8 +59,8 @@ export default defineComponent({
 });
 </script>
 
-<script setup>
-import { isAuthorized, isApp } from "@/utils.js";
+<script setup lang="ts">
+import { isAuthorized, isApp } from "@/utils";
 import LoginForm from "@/components/LoginForm.vue";
 import PlayerControls from "@/components/PlayerControls.vue";
 import SmallMenu from "@/components/SmallMenu.vue";

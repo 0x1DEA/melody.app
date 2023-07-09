@@ -17,11 +17,11 @@
               <input type="password" name="password" v-model="userData.password" class="bg-neutral-50 border border-neutral-300 text-neutral-900 sm:text-sm font-mono rounded-lg block w-full p-2.5 dark:bg-neutral-700 dark:border-neutral-600 dark:placeholder-neutral-400 dark:text-neutral-50" placeholder="••••••••" required>
             </div>
             <div class="flex items-center justify-between">
-              <button type="button" @click="open(FORGOT)" class="text-neutral-600 hover:underline dark:text-neutral-500">Forgot password?</button>
+              <button type="button" @click="openOrRedirect(FORGOT)" class="text-neutral-600 hover:underline dark:text-neutral-500">Forgot password?</button>
             </div>
             <button type="submit" class="w-full text-neutral-900 dark:text-neutral-50 bg-gradient-to-b from-melody-purple to-melody-blue rounded-lg px-5 py-2.5 text-center">Log in</button>
             <p class="text-neutral-600 dark:text-neutral-500">
-              Don't have an account? <button type="button" @click="open(REGISTER)" class="text-transparent bg-clip-text bg-gradient-to-b from-melody-purple to-melody-blue">Register</button>
+              Don't have an account? <button type="button" @click="openOrRedirect(REGISTER)" class="text-transparent bg-clip-text bg-gradient-to-b from-melody-purple to-melody-blue">Register</button>
             </p>
           </form>
         </div>
@@ -30,32 +30,43 @@
   </section>
 </template>
 
-<script>
+<script lang="ts">
 import { defineComponent } from "vue";
-import { mapActions } from "vuex";
+
+import { useSelfStore } from "@/store/modules/self";
+
+import { isApp } from "@/utils";
 
 export default defineComponent({
   name: "LoginForm",
   data() {
     return {
       userData: {
-        name: "",
-        password: "",
+        email: null,
+        password: null,
       }
     };
   },
   methods: {
-    ...mapActions(["login"]),
-
     async submit() {
-      await this.login(this.userData);
-      this.$root.fetchData();
+      const store = useSelfStore();
+
+      await store.login(this.userData);
+
+      await store.fetchAll();
+    },
+    async openOrRedirect(url: string) {
+      if (isApp()) {
+        await open(url);
+      } else {
+        await this.$router.push(url);
+      }
     },
   },
 });
 </script>
 
-<script setup>
+<script setup lang="ts">
 import { open } from "@tauri-apps/api/shell";
 
 const FORGOT = "https://melodykit.app/forgot";

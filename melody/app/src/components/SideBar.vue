@@ -28,30 +28,37 @@
             </router-link>
           </div>
         </div>
+        <!--
         <div v-if="userPlaylists && userPlaylists.length" class="pt-4">
           <router-link v-for="userPlaylist in userPlaylists" v-bind:key="userPlaylist" class="px-2 pb-4 text-md text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-50" :to="`/playlists/${userPlaylist.id}`">
             {{ userPlaylist.name }}
           </router-link>
         </div>
+        -->
       </div>
     </div>
   </nav>
 </template>
 
-<script>
+<script lang="ts">
 import { defineComponent } from "vue";
+
+const HOME = "/";
+const SEARCH = "/search";
+const LIBRARY = "/library";
 
 export default defineComponent({
   name: "SideBar",
-  props: {
-    isHome: {type: Boolean, default: false},
-    isSearch: {type: Boolean, default: false},
-    isLibrary: {type: Boolean, default: false},
-  },
   computed: {
-    userPlaylists() {
-      return this.$store.getters.stateUserPlaylists;
-    }
+    isHome() {
+      return this.$route.path == HOME;
+    },
+    isSearch() {
+      return this.$route.path == SEARCH;
+    },
+    isLibrary() {
+      return this.$route.path == LIBRARY;
+    },
   },
 });
 </script>
