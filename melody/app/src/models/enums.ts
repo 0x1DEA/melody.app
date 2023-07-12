@@ -1,33 +1,48 @@
 export type AlbumTypeLiteral = "album" | "single" | "compilation";
 export type PrivacyTypeLiteral = "public" | "friends" | "private";
 
-export type PlatformLiteral = "all" | "spotify" | "apple_music" | "yandex_music";
+export type PlatformLiteral = "any" | "spotify" | "apple_music" | "yandex_music";
 
-export type RepeatLiteral = "no" | "all" | "one";
+export type RepeatLiteral = "none" | "context" | "one";
 
 export enum AlbumType {
     Album = "album",
     Single = "single",
     Compilation = "compilation",
+    Default = Album,
 }
 
 export enum PrivacyType {
     Public = "public",
     Friends = "friends",
     Private = "private",
+    Default = Public,
 }
 
 export enum Platform {
-    All = "all",
+    Any = "any",
     Spotify = "spotify",
     AppleMusic = "apple_music",
     YandexMusic = "yandex_music",
+    Default = Any,
 }
 
 export enum Repeat {
-    No = "no",
-    All = "all",
+    None = "none",
+    Context = "context",
     One = "one",
+    Default = None,
+}
+
+export function nextRepeat(repeat: Repeat): Repeat {
+    switch (repeat) {
+        case Repeat.None:
+            return Repeat.Context;
+        case Repeat.Context:
+            return Repeat.One;
+        case Repeat.One:
+            return Repeat.None;
+    }
 }
 
 export enum Volume {

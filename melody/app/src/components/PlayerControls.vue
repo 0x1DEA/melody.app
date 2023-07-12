@@ -58,13 +58,23 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 
+import { useSelfStore } from "@/store/modules/self";
+
 export default defineComponent({
   name: "PlayerControls",
   computed: {
     currentPlayerSettings() {
       const store = useSelfStore();
 
-      return store.localPlayerSettings;
+      store.ensureLocalPlayerSettings();
+
+      return store.stateLocalPlayerSettings;
+
+      // if store.stateOffline {
+      //     return store.stateLocalPlayerSettings;
+      // }
+
+      // return store.statePlayerSettings;
     }
   },
   methods: {
@@ -79,7 +89,6 @@ export default defineComponent({
 </script>
 
 <script setup lang="ts">
-import { useSelfStore } from "@/store/modules/self";
 import { appWindow } from "@tauri-apps/api/window";
 
 async function viewFullscreen() {

@@ -1,4 +1,4 @@
-import { Repeat, type RepeatLiteral, Volume, getVolume } from "@/models/enums";
+import { Repeat, type RepeatLiteral, Volume, getVolume, nextRepeat } from "@/models/enums";
 
 export interface PlayerSettingsModel {
     playing: boolean;
@@ -8,6 +8,40 @@ export interface PlayerSettingsModel {
     volume_store: number;
 }
 
+export interface PlayerSettingsType {
+    playing: boolean;
+    shuffle: boolean;
+    repeat: RepeatLiteral;
+    volume: number;
+    volumeStore: number;
+}
+
+export function playerSettingsTypeFromModel(model: PlayerSettingsModel): PlayerSettingsType {
+    return {
+        playing: model.playing,
+        shuffle: model.shuffle,
+        repeat: model.repeat,
+        volume: model.volume,
+        volumeStore: model.volume_store,
+    };
+}
+
+const DEFAULT_PLAYING = false;
+const DEFAULT_SHUFFLE = false;
+const DEFAULT_REPEAT = Repeat.Default as RepeatLiteral;
+const DEFAULT_VOLUME = 0.5;
+const DEFAULT_VOLUME_STORE = 0.0;
+
+export function defaultPlayerSettingsType(): PlayerSettingsType {
+    return {
+        playing: DEFAULT_PLAYING,
+        shuffle: DEFAULT_SHUFFLE,
+        repeat: DEFAULT_REPEAT,
+        volume: DEFAULT_VOLUME,
+        volumeStore: DEFAULT_VOLUME_STORE,
+    };
+}
+
 export class PlayerSettings {
     playing: boolean;
     shuffle: boolean;
@@ -15,12 +49,20 @@ export class PlayerSettings {
     volume: number;
     volumeStore: number;
 
-    constructor(model: PlayerSettingsModel) {
-        this.playing = model.playing;
-        this.shuffle = model.shuffle;
-        this.repeat = model.repeat as Repeat;
-        this.volume = model.volume;
-        this.volumeStore = model.volume_store;
+    static fromModel(model: PlayerSettingsModel) {
+        return new this(playerSettingsTypeFromModel(model));
+    }
+
+    static default() {
+        return new this(defaultPlayerSettingsType());
+    }
+
+    constructor(playerSettings: PlayerSettingsType) {
+        this.playing = playerSettings.playing;
+        this.shuffle = playerSettings.shuffle;
+        this.repeat = playerSettings.repeat as Repeat;
+        this.volume = playerSettings.volume;
+        this.volumeStore = playerSettings.volumeStore;
     }
 
     togglePlaying() {
@@ -32,16 +74,7 @@ export class PlayerSettings {
     }
 
     toggleRepeat() {
-        switch (this.repeat) {
-            case Repeat.No:
-                return Repeat.All;
-
-            case Repeat.All:
-                return Repeat.One;
-
-            case Repeat.One:
-                return Repeat.No;
-        }
+        this.repeat = nextRepeat(this.repeat);
     }
 
     toggleVolume() {
@@ -64,8 +97,8 @@ export class PlayerSettings {
         return this.shuffle;
     }
 
-    isRepeatAll() {
-        return this.repeat == Repeat.All;
+    isRepeatContext() {
+        return this.repeat == Repeat.Context;
     }
 
     isRepeatOne() {
@@ -73,7 +106,7 @@ export class PlayerSettings {
     }
 
     isRepeatAny() {
-        return this.repeat != Repeat.No;
+        return this.repeat != Repeat.None;
     }
 
     getVolume() {

@@ -1,15 +1,15 @@
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 
 import { defineStore } from "pinia";
 import { PlayerSettings } from "@/models/playerSettings";
-import { Token } from "@/models/token";
-import { User, UserData } from "@/models/user";
+import { User } from "@/models/user";
 import { UserSettings } from "@/models/userSettings";
 import { authorizationHeader } from "@/store/utils";
 
+import { useTokenStore } from "@/store/modules/token";
+
 interface State {
     self: User | null;
-    token: Token | null;
     settings: UserSettings | null;
     playerSettings: PlayerSettings | null;
     localPlayerSettings: PlayerSettings | null;
@@ -22,7 +22,6 @@ export const useSelfStore = defineStore(
         state: (): State => (
             {
                 self: null,
-                token: null,
                 settings: null,
                 playerSettings: null,
                 localPlayerSettings: null,
@@ -30,16 +29,7 @@ export const useSelfStore = defineStore(
             }
         ),
         getters: {
-            authorized: (state) => state.token != null,
-            stateToken: (state) => {
-                const token = state.token;
-
-                if (token == null) {
-                    throw new Error("token is not present");
-                }
-
-                return token;
-            },
+            loaded: (state) => state.self != null,
             stateSelf: (state) => {
                 const self = state.self;
 
@@ -79,75 +69,47 @@ export const useSelfStore = defineStore(
             stateOffline: (state) => state.offline,
         },
         actions: {
-            async login(userData: UserData) {
-                let {data} = await axios.post("/login", userData);
-
-                let token = new Token(data);
-
-                this.setToken(token);
-            },
-            async logout() {
-                let token = this.token;
-
-                this.removeAll();
-
-                if (token == null) {
-                    return;
-                }
-
-                await axios.post("/logout", null, {headers: authorizationHeader(token)});
-            },
             async fetchAll() {
                 await this.fetchSelf();
                 await this.fetchSettings();
                 // await this.fetchPlayerSettings();
             },
             async fetchSelf() {
-                let token = this.token;
-
-                if (token == null) {
-                    return;
-                }
+                let token = useTokenStore().stateToken;
 
                 let {data} = await axios.get("/me", {headers: authorizationHeader(token)});
 
-                let self = new User(data);
+                let self = User.fromModel(data);
 
                 this.setSelf(self);
             },
             async fetchSettings() {
-                let token = this.token;
-
-                if (token == null) {
-                    return;
-                }
+                let token = useTokenStore().stateToken;
 
                 let {data} = await axios.get("/me/settings", {headers: authorizationHeader(token)});
 
-                let settings = new UserSettings(data);
+                let settings = UserSettings.fromModel(data);
 
                 this.setSettings(settings);
             },
             async fetchPlayerSettings() {
-                let token = this.token;
-
-                if (token == null) {
-                    return;
-                }
+                let token = useTokenStore().stateToken;
 
                 let {data} = await axios.get(
                     "/me/player/settings", {headers: authorizationHeader(token)}
                 );
 
-                let playerSettings = new PlayerSettings(data);
+                let playerSettings = PlayerSettings.fromModel(data);
 
                 this.setPlayerSettings(playerSettings);
             },
+            ensureLocalPlayerSettings() {
+                if (this.localPlayerSettings == null) {
+                    this.localPlayerSettings = PlayerSettings.default();
+                }
+            },
             setSelf(self: User) {
                 this.self = self;
-            },
-            setToken(token: Token) {
-                this.token = token;
             },
             setSettings(settings: UserSettings) {
                 this.settings = settings;
@@ -156,7 +118,6 @@ export const useSelfStore = defineStore(
                 this.playerSettings = playerSettings;
             },
             removeAll() {
-                this.removeToken();
                 this.removeSelf();
                 this.removeSettings();
                 this.removePlayerSettings();
@@ -164,15 +125,12 @@ export const useSelfStore = defineStore(
             removeSelf() {
                 this.self = null;
             },
-            removeToken() {
-                this.token = null;
-            },
             removeSettings() {
                 this.settings = null;
             },
             removePlayerSettings() {
                 this.playerSettings = null;
             }
-        }
+        },
     }
 )

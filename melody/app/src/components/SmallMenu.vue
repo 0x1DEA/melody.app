@@ -1,5 +1,5 @@
 <template>
-  <Menu as="div" :class="['relative w-fit text-left']">
+  <Menu v-if="isLoaded()" as="div" :class="['relative w-fit text-left']">
     <MenuButton class="inline-flex w-full items-center justify-center rounded-full bg-neutral-200 dark:bg-black text-neutral-900 dark:text-neutral-50 hover:bg-neutral-100 dark:hover:bg-neutral-800 focus:outline-none gap-x-2 pr-4">
       <img class="h-10 w-auto rounded-full" :src="`https://melodykit.app/api/v1/users/${self.id}/image`"/>
       <span>{{ self.name }}</span>
@@ -48,4 +48,5 @@ export default defineComponent({
 
 <script setup lang="ts">
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
+import { isLoaded } from "@/utils";
 </script>

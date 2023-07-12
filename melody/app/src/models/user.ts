@@ -1,4 +1,4 @@
-import { Entity, type EntityModel } from "@/models/entity";
+import { Entity, type EntityModel, type EntityType } from "@/models/entity";
 import { PrivacyType, type PrivacyTypeLiteral } from "@/models/enums";
 
 export interface UserModel extends EntityModel {
@@ -12,14 +12,31 @@ export interface UserModel extends EntityModel {
     privacy_type: PrivacyTypeLiteral;
 }
 
-export class UserData {
-    email: string | null;
-    password: string | null;
+export interface UserType extends EntityType {
+    uri: string;
 
-    constructor(email: string | null, password: string | null) {
-        this.email = email;
-        this.password = password;
-    }
+    followerCount: number;
+
+    streamCount: number;
+    streamDurationMS: number;
+
+    privacyType: PrivacyTypeLiteral;
+}
+
+export function userTypeFromModel(model: UserModel): UserType {
+    return {
+        id: model.id,
+        createdAt: model.created_at,
+        name: model.name,
+        spotifyID: model.spotify_id,
+        appleMusicID: model.apple_music_id,
+        yandexMusicID: model.yandex_music_id,
+        uri: model.uri,
+        followerCount: model.follower_count,
+        streamCount: model.stream_count,
+        streamDurationMS: model.stream_duration_ms,
+        privacyType: model.privacy_type,
+    };
 }
 
 export class User extends Entity {
@@ -32,16 +49,20 @@ export class User extends Entity {
 
     privacyType: PrivacyType;
 
-    constructor(model: UserModel) {
-        super(model);
+    static fromModel(model: UserModel) {
+        return new this(userTypeFromModel(model));
+    }
 
-        this.uri = model.uri;
+    constructor(user: UserType) {
+        super(user);
 
-        this.followerCount = model.follower_count;
+        this.uri = user.uri;
 
-        this.streamCount = model.stream_count;
-        this.streamDurationMS = model.stream_duration_ms;
+        this.followerCount = user.followerCount;
 
-        this.privacyType = model.privacy_type as PrivacyType;
+        this.streamCount = user.streamCount;
+        this.streamDurationMS = user.streamDurationMS;
+
+        this.privacyType = user.privacyType as PrivacyType;
     }
 }

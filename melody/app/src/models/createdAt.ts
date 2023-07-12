@@ -1,15 +1,30 @@
-import { Base, type BaseModel } from "@/models/base";
+import { Base, type BaseModel, type BaseType } from "@/models/base";
 
 export interface CreatedAtModel extends BaseModel {
     created_at: string;
 }
 
+export interface CreatedAtType extends BaseType {
+    createdAt: string;
+}
+
+export function createdAtTypeFromModel(model: CreatedAtModel): CreatedAtType {
+    return {
+        id: model.id,
+        createdAt: model.created_at,
+    };
+}
+
 export class CreatedAt extends Base {
     createdAt: Date;
 
-    constructor(model: CreatedAtModel) {
-        super(model);
+    static fromModel(model: CreatedAtModel) {
+        return new this(createdAtTypeFromModel(model));
+    }
 
-        this.createdAt = new Date(model.created_at);
+    constructor(createdAt: CreatedAtType) {
+        super(createdAt);
+
+        this.createdAt = new Date(createdAt.createdAt);
     }
 }
