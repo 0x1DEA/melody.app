@@ -69,12 +69,6 @@ export default defineComponent({
       store.ensureLocalPlayerSettings();
 
       return store.stateLocalPlayerSettings;
-
-      // if store.stateOffline {
-      //     return store.stateLocalPlayerSettings;
-      // }
-
-      // return store.statePlayerSettings;
     }
   },
   methods: {
