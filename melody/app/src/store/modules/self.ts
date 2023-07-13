@@ -13,7 +13,6 @@ interface State {
     settings: UserSettings | null;
     playerSettings: PlayerSettings | null;
     localPlayerSettings: PlayerSettings | null;
-    offline: boolean;
 }
 
 export const useSelfStore = defineStore(
@@ -25,7 +24,6 @@ export const useSelfStore = defineStore(
                 settings: null,
                 playerSettings: null,
                 localPlayerSettings: null,
-                offline: false,
             }
         ),
         getters: {
@@ -66,7 +64,6 @@ export const useSelfStore = defineStore(
 
                 return localPlayerSettings;
             },
-            stateOffline: (state) => state.offline,
         },
         actions: {
             async fetchAll() {
